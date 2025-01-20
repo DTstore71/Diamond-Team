@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe: Classic Game of Fun and Challenge</title>
+    <meta name="robots" content="index, follow">
+    
+    <meta name="description" content="একটি ক্লাসিক টিক-ট্যাক-টো গেম, যেখানে আপনি বন্ধু বা কম্পিউটার এর বিরুদ্ধে খেলার মজার অভিজ্ঞতা নিতে পারেন। সরল নিয়ম, চ্যালেঞ্জিং খেলা!">
+    
+    <meta name="keywords" content="Tic-Tac-Toe, online game, classic game, 2 player game, fun game, AI game, strategy game, play Tic-Tac-Toe, multiplayer, board game, puzzle game, interactive game, free online game">
+    
+    
+    
+    <meta name="author" content="Diamond Team">
+
+    <meta property="og:title" content="Tic-Tac-Toe: Classic Game of Fun and Challenge">
+    <meta property="og:description" content="একটি ক্লাসিক টিক-ট্যাক-টো গেম, যেখানে আপনি বন্ধু বা কম্পিউটার এর বিরুদ্ধে খেলার মজার অভিজ্ঞতা নিতে পারেন। সরল নিয়ম, চ্যালেঞ্জিং খেলা!">
+    <meta property="og:image" content="https://i.imgur.com/U06xtnt.png">
+    <meta property="og:url" content="https://tictactoe001.netlify.app">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tic-Tac-Toe: Classic Game of Fun and Challenge">
+    <meta name="twitter:description" content="একটি ক্লাসিক টিক-ট্যাক-টো গেম, যেখানে আপনি বন্ধু বা কম্পিউটার এর বিরুদ্ধে খেলার মজার অভিজ্ঞতা নিতে পারেন। সরল নিয়ম, চ্যালেঞ্জিং খেলা!">
+    <meta name="twitter:image" content="https://i.imgur.com/U06xtnt.png">
+
+ 
+    <link rel="icon" href="https://i.imgur.com/U06xtnt.png" type="png">
+    
+</head>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Siyam+Rupali&display=swap');
+
+        *{
+            color: white;
+            font-family: 'Playfair Display', sans-serif;            
+            transition: 0.2s ease-in-out;
+            user-select: none;
+        };
+}
+
+        
+        #nickname-box {
+            background-color: #FF2E63;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #nickname-input {
+            padding: 10px;
+            font-size: 1.2rem;
+            width: 250px;
+            margin-bottom: 10px;
+        }
+        #submit-nickname {
+            background-color: #08d9d6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #submit-nickname:hover {
+            background-color: #ff2e63;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        #nickname-change-alert {
+            display: none;
+            margin-top: 20px;
+            color: red;
+        }
+     
+        
+        .align{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        body{
+            background-color: #252A34;
+            font-family: 'Playfair Display', sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            text-align: center;
+            padding-top: 5vh;
+        }
+        .turn-container{
+            font-family: 'Playfair Display', sans-serif;
+            width: 170px;
+            height: 80px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            position: relative;
+        }
+        
+      
+        
+        .turn-container h3{
+            font-family: 'Playfair Display', sans-serif;
+            margin: 0;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+        .turn-container .turn-box{
+            font-family: 'Playfair Display', sans-serif;
+            border: 3px solid #000;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+       
+        .bg{
+            position: absolute;
+            font-family: 'Playfair Display', sans-serif;
+            bottom: 0;
+            left: 0;
+            width: 85px;
+            height: 40px;
+            background-color: #FF2E63;
+            z-index: -1;
+        }
+        .main-grid{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            height: 250px;
+            width: 250px;
+            margin: 30px auto;
+            border: 2px solid #000;
+        }
+        .box{
+            cursor: pointer;
+            font-family: 'Playfair Display', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            border: 2px solid #000;
+        }
+        .box:hover{
+            background-color: #FF2E63;
+        }
+        #play-again{
+            background-color: #FF2E63;
+            padding: 10px 25px;
+            border: none;
+            font-family: 'Playfair Display', sans-serif;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .mode-selection {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        .mode-btn {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        .mode-btn:hover {
+          background-color: #ff2e63;
+        }
+
+        .mode-btn.active {
+          background-color: #ff2e63;
+          color: #ffffff;
+        }
+        
+        #copy-selection {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        #copy-btn {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        #copy-btn:hover {
+          background-color: #ff2e63;
+        }
+
+        #copy-btn.active {
+          background-color: #ff2e63;
+          color: #ffffff;
+        }
+        
+        #screenshot-selection {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        #screenshot {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        #screenshot:hover {
+          background-color: #ff2e63;
+        }
+
+        #screenshot.active {
+          background-color: #ff2e63;
+          color: #ffffff;
+        }
+        
+         #store-selection {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        #store-btn {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+                
+   #rules-container {
+   position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 450px;
+    max-height: 80%;
+    background: url('https://i.imgur.com/1Unm3kk.jpeg') no-repeat center center/cover;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    overflow-y: auto;
+    z-index: 999;
+    background-blur: 10px;
+    animation: fadeIn 0.8s ease-in-out;
+   
+}
+
+#rules-container.show {
+    display: block;
+    z-index: 1000;
+}
+
+#rules-container.hidden {
+    display: none;
+}
+
+#rules-container h2 {
+    margin-bottom: 15px;
+    color: #08D9D6;
+    font-size: 1.8rem;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+}
+
+
+#rules-container h3 {
+    margin-bottom: 15px;
+    color: #08D9D6;
+    font-size: 1.8rem;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px;
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+ul li {
+    background-color: #f1f1f1;
+    margin: 12px 0;
+    padding: 18px 25px;
+    border-left: 8px solid #FF5722;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    color: black;
+    letter-spacing: 0.5px;
+    font-family: 'Playfair Display', serif;
+}
+
+ul li:hover {
+    background-color: #FFEBEE;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+    cursor: pointer;
+}
+
+ul li h4 {
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #FF572;
+    text-transform: capitalize;
+}
+
+ul li p {
+    font-family: 'Playfair Display', serif;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    text-align: left;
+}
+
+ul li .icon {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: #FF5722;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+ul li .badge {
+    font-family: 'Playfair Display', serif;
+    background-color: #4CAF50;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.special-message {
+    font-family: 'Playfair Display', serif;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #fff9c4, #ffeb3b);
+    padding: 20px;
+    border: 4px solid #ffcc00;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    animation: slideIn 0.6s ease-out;
+}
+
+@keyframes slideIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.special-message::before {
+font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffcc00;
+}
+
+.special-message h3 {
+font-family: 'Playfair Display', serif;
+    margin: 0;
+    font-size: 1.4rem;
+    color: #ffcc00;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.special-message p {
+font-family: 'Playfair Display', serif;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #444;
+}
+
+#close-rules {
+    background-color: #08D9D6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    display: block;
+    margin: 20px auto 0;
+}
+
+#close-rules:hover {
+    background-color: #FF2E63;
+}        
+
+#view-rules-btn {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+}
+
+#view-rules-btn:hover {
+    background-color: #FF2E63;
+}
+        
+        
+        #weekly-subscribe {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        #weekly-subscribe:hover {
+          background-color: #ff2e63;
+        }
+
+        #weekly-subscribe.active {
+          background-color: #ff2e63;
+          color: #ffffff;
+          
+          }
+          
+           #monthly-subscribe-selection {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        #monthly-subscribe {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        #monthly-subscribe:hover {
+          background-color: #ff2e63;
+        }
+
+        #monthly-subscribe.active {
+          background-color: #ff2e63;
+          color: #ffffff;
+          }
+          
+          #view-purchases-selection {
+          text-align: center;
+          margin-top: 20px;
+        }
+        
+        #view-purchases-selection {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        #view-purchases {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        #view-purchases:hover {
+          background-color: #ff2e63;
+        }
+
+        #view-purchases.active {
+          background-color: #ff2e63;
+          color: #ffffff;
+          
+        }
+
+        #store-btn:hover {
+          background-color: #ff2e63;
+        }
+
+        #store-btn.active {
+          background-color: #ff2e63;
+          color: #ffffff;
+        }
+        
+        #view-selection {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        #view-history {
+          background-color: #08d9d6;
+          color: #ffffff;
+          padding: 10px 20px;
+          margin: 5px;
+          border: none;
+          border-radius: 5px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        #view-history:hover {
+          background-color: #ff2e63;
+        }
+
+        #view-history.active {
+          background-color: #ff2e63;
+          color: #ffffff;       
+  
+
+          
+        #play-again{
+         background-color: #FF2E63;
+         padding: 10px 25px;
+         border: none;
+         font-size: 1.2rem;
+         border-radius: 5px;
+         cursor: pointer;
+         display: none;
+}
+#play-again:hover{
+    padding: 10px 40px;
+    background-color: #08D9D6;
+    color: #000;
+}
+
+        #coins {
+          font-size: 18px;
+          margin: 10px;
+          color: #FFF;
+        }
+        
+           </style>
+    <body>
+    <div class="turn-container">
+    <h3>Diamond Team 🖱️</h3>
+    <div class="turn-box align">YOU</div>
+    <div class="turn-box align">HE</div>
+    
+    <div class="bg"></div>
+</div>
+
+<div id="coins">🪙: 0</div>
+ <div id="diamond">💎: 0</div>
+ <div id="weekly-timer-container">
+    <p>Weekly Rewards: <span id="weekly-timer"></span></p>
+</div>
+
+<div class="main-grid">
+    <div class="box align"></div>
+    <div class="box align"></div>
+    <div class="box align"></div>
+    <div class="box align"></div>
+    <div class="box align"></div>
+    <div class="box align"></div>
+    <div class="box align"></div>
+    <div class="box align"></div>
+    <div class="box align"></div>
+</div>
+
+<div class="mode-selection">
+    <button id="multiplayer-btn" class="mode-btn">Duo Player</button>
+    <button id="ai-btn" class="mode-btn">Cpu Player</button>
+    <button id="copy-btn">Copy 🪙, 💎</button>
+    <button id="view-history">View History</button>
+    <button id="screenshot">Take Screenshot</button>   
+    <button id="store-btn">Store</button>
+    <button id="view-rules-btn">View Game Rules</button>
+
+     <div id="rules-container">
+        <h2>আমার তৈরি গেমের নিয়মাবলী:</h2>
+        <ul>
+            <li>
+                <strong><h3>গেম বোর্ড:</h3></strong> 
+                আপনি একটি ৩×৩ গ্রিডে খেলবেন, এখানে আপনার লক্ষ্য হলো একটি সারি, কলাম বা ডায়াগোনালে আপনার চিহ্ন (X) পূর্ণ করা। ভবিষ্যতে, এই গ্রিড আরো বড় হতে পারে, যেমন: ৪×৪ বা ৫×৫ পর্যন্ত! আর হ্যাঁ গেমের যে Turn Box (YOU | HE) সেটা বর্তমানে Work করবে না তাই আমি বিশেষভাবে দুঃখিত।
+            </li>
+            <li>
+                <strong><h3>X নাকি O মেইন প্লেয়ার (অর্থাৎ কে ডায়মন্ড ও কয়েন Earn করবে)?:</h3></strong> 
+                Player X হিসেবে, আপনিই এই গেমের মূল খেলোয়াড়, আপনার মিশন হলো কয়েন 🪙 এবং ডায়মন্ড 💎 অর্জন করা। Player O হয়তো ভবিষ্যতে আপনার সাথে একই প্রতিযোগিতায় যুক্ত হবে, কিন্তু এই মুহূর্তে পুরো গেম আপনার জন্য উন্মুক্ত!
+            </li>
+            <li>
+                <strong><h3>হারলে, কিংবা জিতলে কি হবে?:</h3></strong> 
+                প্রতিটি জয় আপনাকে 🪙 কয়েন এবং 💎 ডায়মন্ড Earn করতে সাহায্য করবে! 
+                <ul>
+                    <li>Multiplayer Mode: প্রতিযোগিতায় জয়ী হলে ২০ কয়েন এবং ৫ ডায়মন্ড পাবেন, আর হারলে কোনো কয়েন কিংবা ডায়মন্ড কাটা হবে না।</li>
+                    <li>AI Mode: CPU কে হারাতে পারলে, আপনি পাবেন ৫০ কয়েন এবং ৩০ ডায়মন্ড আর না হারাতে পারলে ৫০ কয়েন ও ১০ ডায়মন্ড কেটে নেওয়া হবে।</li>
+                </ul>
+                
+           
+            <li>
+                <strong><h3>সাপ্তাহিক রিওয়ার্ড:</h3></strong> 
+                প্রতি ৭ দিন পর পর ১০০ ডায়মন্ড পাবেন, ধৈর্য ধরে খেলুন আর এই বিশেষ পুরস্কার উপভোগ করুন।
+            </li>
+            <li>
+                <strong><h3>সাবস্ক্রিপশন অফার:</h3></strong> 
+                <ul>
+                    <li>"সাপ্তাহিক প্ল্যান বা সাবস্ক্রিপশন": আপনি মাত্র ৫৩৪৫ কয়েন দিয়ে ৭ দিনের মধ্যে প্রতিদিন ৩৫ ডায়মন্ড ও কেনার সাথে সাথে একবারের জন্য ২০০ ডায়মন্ড পেতে পারেন। এভাবে আপনি অনেক বার এই সাবস্ক্রিপশন কিনতে পারবেন</li>
+                    <li>"মাসিক প্ল্যান": আপনি মাত্র ২৩৩৮০ কয়েন দিয়ে ৩০ দিনের মধ্যে প্রতিদিন ৫০ ডায়মন্ড ও কেনার সাথে সাথে একবারের জন্য ১০০০ ডায়মন্ড পেতে পারেন। এভাবে আপনি অনেক বার এই সাবস্ক্রিপশন কিনতে পারবেন</li>
+                </ul>
+                আপনার কয়েন এবং ডায়মন্ড গুলো আপনি জমাতে থাকনে সামনের আপডেটে আপনার জন্য ভালো কিছু অপেক্ষা করছে!
+            </li>
+            <li>
+                <strong><h3>AI বা CPU গেমপ্লে:</h3></strong> 
+                CPU আপনার জন্য একটি কঠিন প্রতিদ্বন্দ্বী। এটি Minimax অ্যালগরিদম ব্যবহার করে আপনার প্রতিটি মুভকে বিশ্লেষণ করে। এটি এতটাই কঠিন যে আপনি কখনোই তার সাথে জিততে পারবেন না, পারলে CPU কে হারান এবং আপনার বুদ্ধিমত্তার প্রমাণ দিন।
+            </li>
+            <li>
+                <strong><h3>জয়, পরাজয় এবং ড্র এর ইতিহাস:</h3></strong> 
+                প্রতিটি ম্যাচে আপনার জয়, পরাজয় এবং ড্র লোকাল স্টোরেজে সংরক্ষণ করা হবে। "View History" বাটনে ক্লিক করে আপনার সকল কিছু দেখতে পারবেন।
+            </li>
+        </ul>
+
+        <div class="special-message">
+            <p style="margin-top: 20px; font-size: 1rem; line-height: 1.8; color: black;">
+                প্রিয় Gamer's,  
+                <br> আপনি এই গেমে একজন অন্যতম সেরা খেলোয়াড়। আপনার প্রতিটি পদক্ষেপ একটি নতুন ইতিহাস তৈরি করতে পারে তাই মনে রাখবেন, জেতা-হারা বড় বিষয় নয়। প্রতিটি মুহূর্ত উপভোগ করা এবং শেখাই হলো আসল সাফল্য।
+                <br><br>
+                আপনি যদি Player O-এর সাথে নতুন অ্যাডভেঞ্চারে যেতে চান, তবে প্রস্তুত থাকুন। ভবিষ্যতে আমি এই সিস্টেম পর্যন্ত যোগ করার পরিকল্পনা করছি। 
+                <br><br>
+                শুভকামনা রইল আপনার প্রতিটি যাত্রার জন্য!
+            </p>
+            <p style="margin-top: 20px; font-size: 1.2rem; color: #FF2E63; font-weight: bold; text-align: center;">
+                "Diamond Team-এর পক্ষ থেকে সেরা একটি হাত ধোয়া শুভকামনা!"
+                <br>—<a href="https://youtube.com/@diamondteam71" style="margin-top: 20px; font-size: 1.2rem; color: #FF2E63; font-weight: bold; text-align: center;">Subscribe Diamond Team</a> 🎯
+            </p>
+        </div>
+        <button id="close-rules">Close</button>
+    </div>
+</div>
+    </div>
+    <div class="subscription-container">
+    <button id="weekly-subscribe">Weekly Subscription</button>
+    <button id="monthly-subscribe">Monthly Subscription</button>
+    <button id="view-purchases">View My Purchases</button>
+</div>
+
+<script>  document.getElementById("store-btn").addEventListener("click", function () {
+   // window.location.href = 
+    alert("😑 Sorry Sir Or Maddam, Store Is Unavailable. Have A Good Day 😄");
+});
+</script>    
+
+
+</div>
+
+<h2 id="results"></h2>
+<button id="play-again">Play Again</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>  
+        
+        document.getElementById("view-rules-btn").addEventListener("click", function() {
+    document.getElementById("rules-container").classList.remove("hidden");
+    document.getElementById("rules-container").classList.add("show");
+});
+
+document.getElementById("close-rules").addEventListener("click", function() {
+    document.getElementById("rules-container").classList.remove("show");
+    document.getElementById("rules-container").classList.add("hidden");
+});
+
+if (!localStorage.getItem("rulesSeen")) {
+    const rulesContainer = document.getElementById("rules-container");
+    rulesContainer.classList.remove("hidden");
+    rulesContainer.classList.add("show");
+    localStorage.setItem("rulesSeen", "true");
+}
+
+     document.addEventListener("DOMContentLoaded", function () {
+    let playerCoins = localStorage.getItem("playerCoins") ? parseInt(localStorage.getItem("playerCoins")) : 100;
+    let playerDiamonds = localStorage.getItem("playerDiamonds") ? parseInt(localStorage.getItem("playerDiamonds")) : 100;
+    let subscriptions = JSON.parse(localStorage.getItem("subscriptions")) || [];
+
+    const weeklyButton = document.getElementById("weekly-subscribe");
+    const monthlyButton = document.getElementById("monthly-subscribe");
+    const viewPurchasesButton = document.getElementById("view-purchases");
+
+    function updateUI() {
+        document.getElementById("coins").textContent = `🪙: ${playerCoins}`;
+        document.getElementById("diamond").textContent = `💎: ${playerDiamonds}`;
+    }
+
+    function showConfirmationBox(message, subscriptionType, price, diamonds, dailyReward, days) {
+        const confirmationBox = document.createElement('div');
+        confirmationBox.style.position = 'fixed';
+        confirmationBox.style.top = '50%';
+        confirmationBox.style.left = '50%';
+        confirmationBox.style.transform = 'translate(-50%, -50%)';
+        confirmationBox.style.backgroundColor = '#fff';
+        confirmationBox.style.padding = '30px 50px';
+        confirmationBox.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
+        confirmationBox.style.borderRadius = '15px';
+        confirmationBox.style.textAlign = 'center';
+        confirmationBox.style.maxWidth = '600px';
+        confirmationBox.style.fontFamily = 'Arial, sans-serif';
+        confirmationBox.style.fontSize = '18px';
+        confirmationBox.style.lineHeight = '1.5';
+        confirmationBox.style.border = '1px solid #ddd';
+        confirmationBox.style.boxSizing = 'border-box';
+        confirmationBox.innerHTML = `
+            <h2 style="color: #333; font-size: 26px; margin-bottom: 20px; font-weight: bold;">Confirm Your Purchase</h2>
+            <p style="color: #555; margin-bottom: 20px; font-size: 16px;">${message}</p>
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                <button id="yes-btn" style="background-color: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 12px; cursor: pointer; font-size: 20px; transition: background-color 0.3s; width: 120px;">
+                    YES
+                </button>
+                <button id="no-btn" style="background-color: #dc3545; color: white; padding: 15px 30px; border: none; border-radius: 12px; cursor: pointer; font-size: 20px; transition: background-color 0.3s; width: 120px;">
+                    NO
+                </button>
+            </div>
+        `;
+        document.body.appendChild(confirmationBox);
+
+        document.getElementById('yes-btn').addEventListener('click', function () {
+            const existingSubscription = subscriptions.find(sub => sub.type === subscriptionType);
+
+            if (playerCoins >= price) {
+                playerCoins -= price;
+                playerDiamonds += diamonds;
+
+                if (existingSubscription) {
+                    existingSubscription.days += days;
+                    existingSubscription.lastRewardDate = new Date();
+                } else {
+                    subscriptions.push({
+                        type: subscriptionType,
+                        diamonds: diamonds,
+                        dailyReward: dailyReward,
+                        days: days,
+                        startDate: new Date(),
+                        lastRewardDate: new Date()
+                    });
+                }
+
+                playerDiamonds += dailyReward;
+
+                localStorage.setItem("playerCoins", playerCoins);
+                localStorage.setItem("playerDiamonds", playerDiamonds);
+                localStorage.setItem("subscriptions", JSON.stringify(subscriptions));
+
+                successAlert(`${subscriptionType} subscription successful! You received ${diamonds} diamonds immediately, and ${dailyReward} diamonds starting from today for the next ${days} days.`);
+            } else {
+                errorAlert("You Do Not Have Enough Coins!");
+            }
+            confirmationBox.remove();
+            updateUI();
+        });
+
+        document.getElementById('no-btn').addEventListener('click', function () {
+            cancelAlert("OOPS... Subscription Canceled");
+            confirmationBox.remove();
+        });
+    }
+
+    function successAlert(message) {
+        const alertBox = document.createElement('div');
+        alertBox.style.position = 'fixed';
+        alertBox.style.top = '50%';
+        alertBox.style.left = '50%';
+        alertBox.style.transform = 'translate(-50%, -50%)';
+        alertBox.style.backgroundColor = '#28a745';
+        alertBox.style.color = '#fff';
+        alertBox.style.padding = '20px 40px';
+        alertBox.style.borderRadius = '10px';
+        alertBox.style.fontSize = '20px';
+        alertBox.style.fontFamily = 'Arial, sans-serif';
+        alertBox.style.textAlign = 'center';
+        alertBox.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2)';
+        alertBox.innerHTML = `<p style="margin: 0;">${message}</p>`;
+        document.body.appendChild(alertBox);
+
+        setTimeout(function () {
+            alertBox.remove();
+        }, 3000);
+    }
+
+    function errorAlert(message) {
+        const alertBox = document.createElement('div');
+        alertBox.style.position = 'fixed';
+        alertBox.style.top = '50%';
+        alertBox.style.left = '50%';
+        alertBox.style.transform = 'translate(-50%, -50%)';
+        alertBox.style.backgroundColor = '#dc3545';
+        alertBox.style.color = '#fff';
+        alertBox.style.padding = '20px 40px';
+        alertBox.style.borderRadius = '10px';
+        alertBox.style.fontSize = '20px';
+        alertBox.style.fontFamily = 'Arial, sans-serif';
+        alertBox.style.textAlign = 'center';
+        alertBox.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2)';
+        alertBox.innerHTML = `<p style="margin: 0;">${message}</p>`;
+        document.body.appendChild(alertBox);
+
+        setTimeout(function () {
+            alertBox.remove();
+        }, 3000);
+    }
+
+    function cancelAlert(message) {
+        const alertBox = document.createElement('div');
+        alertBox.style.position = 'fixed';
+        alertBox.style.top = '50%';
+        alertBox.style.left = '50%';
+        alertBox.style.transform = 'translate(-50%, -50%)';
+        alertBox.style.backgroundColor = '#ffc107';
+        alertBox.style.color = '#fff';
+        alertBox.style.padding = '20px 40px';
+        alertBox.style.borderRadius = '10px';
+        alertBox.style.fontSize = '20px';
+        alertBox.style.fontFamily = 'Arial, sans-serif';
+        alertBox.style.textAlign = 'center';
+        alertBox.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2)';
+        alertBox.innerHTML = `<p style="margin: 0;">${message}</p>`;
+        document.body.appendChild(alertBox);
+
+        setTimeout(function () {
+            alertBox.remove();
+        }, 3000);
+    }
+
+    function updateDailyRewards() {
+        const currentTime = new Date();
+
+        subscriptions.forEach(sub => {
+            const lastRewardTime = new Date(sub.lastRewardDate);
+            const diffInTime = currentTime - lastRewardTime;
+            const diffInDays = diffInTime / (1000 * 3600 * 24);
+
+            if (diffInDays >= 1) {
+                const rewardDays = Math.floor(diffInDays);
+                for (let i = 0; i < rewardDays; i++) {
+                    if (sub.days > 0) {
+                        playerDiamonds += sub.dailyReward;
+                        sub.lastRewardDate = new Date();
+                        sub.days--;
+                    }
+                }
+            }
+        });
+
+        localStorage.setItem("playerDiamonds", playerDiamonds);
+        localStorage.setItem("subscriptions", JSON.stringify(subscriptions));
+        updateUI();
+    }
+
+    weeklyButton.addEventListener("click", function () {
+        showConfirmationBox(
+            "Do you want to subscribe to the Weekly Plan? (200 Diamonds, 35 Diamonds daily for 7 days) 🎯 PRICE: 5345 Coins ",
+            "Weekly", 5345, 200, 35, 7
+        );
+    });
+
+    monthlyButton.addEventListener("click", function () {
+        showConfirmationBox(
+            "Do you want to subscribe to the Monthly Plan? (1000 Diamonds, 50 Diamonds daily for 30 days) 🎯 PRICE: 23380 Coins",
+            "Monthly", 23380, 1000, 50, 30
+        );
+    });
+
+    viewPurchasesButton.addEventListener("click", function () {
+        let subscriptionsList = subscriptions.map(sub => {
+            return `${sub.type} Plan: ${sub.diamonds} Diamonds, ${sub.dailyReward} Diamonds daily for ${sub.days} days.`;
+        }).join("\n");
+        if (subscriptionsList) {
+            alert(
+`Your Subscriptions:\n\n${subscriptionsList}`);
+        } else {
+            alert("You Have No Active Subscriptions.");
+        }
+    });
+
+    updateDailyRewards();
+    updateUI();
+});
+
+    
+    
+   
+document.addEventListener("DOMContentLoaded", function() {
+    let boxes = document.querySelectorAll(".box");
+    let turn = "X";
+    let isGameOver = false;
+    let isMultiplayer = true;
+    let board = Array(9).fill(null);
+
+    let playerCoins = localStorage.getItem("playerCoins") ? parseInt(localStorage.getItem("playerCoins")) : 100;
+    let playerDiamonds = localStorage.getItem("playerDiamonds") ? parseInt(localStorage.getItem("playerDiamonds")) : 100;
+let xp = 100;    
+    let gameHistory = JSON.parse(localStorage.getItem("gameHistory")) || [];
+    let lastClaimedDate = localStorage.getItem("lastClaimedDate") ? new Date(localStorage.getItem("lastClaimedDate")) : null;
+    let firstLoginDate = localStorage.getItem("firstLoginDate") ? new Date(localStorage.getItem("firstLoginDate")) : null;
+
+    let weeklyTimerElement = document.querySelector("#weekly-timer");
+
+ 
+if (!localStorage.getItem("firstLoginDate")) {
+    firstLoginDate = new Date();
+    localStorage.setItem("firstLoginDate", firstLoginDate);
+    playerDiamonds += 100;
+    alert("You Received 100 Diamonds For Your First Login!");
+} else {
+    firstLoginDate = new Date(localStorage.getItem("firstLoginDate"));
+}
+
+
+localStorage.setItem("playerDiamonds", playerDiamonds);
+    
+    
+
+function checkWeeklyDiamonds() {
+    let currentDate = new Date();
+    let daysDifference = (currentDate - firstLoginDate) / (1000 * 3600 * 24);
+    if (daysDifference >= 7) {
+        playerDiamonds += 100; 
+        firstLoginDate = currentDate; 
+        alert("You Received 100 Diamonds For This Week!");
+    }
+    localStorage.setItem("playerDiamonds", playerDiamonds); 
+    localStorage.setItem("firstLoginDate", firstLoginDate); 
+}
+
+function startWeeklyCountdown() {
+    let currentDate = new Date();
+    let nextWeek = new Date(firstLoginDate);
+    nextWeek.setDate(nextWeek.getDate() + 7); 
+
+    function updateTimer() {
+        let timeRemaining = nextWeek - new Date(); 
+        if (timeRemaining <= 0) {
+            weeklyTimerElement.innerHTML = "Time's up! You can claim your diamonds.";
+        } else {
+            let hours = Math.floor(timeRemaining / (1000 * 3600)); 
+            let minutes = Math.floor((timeRemaining % (1000 * 3600)) / (1000 * 60)); 
+            let seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000); 
+            weeklyTimerElement.innerHTML = `${hours}:${minutes}:${seconds}`;
+        }
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+}
+
+
+if (!localStorage.getItem("firstLoginDate")) {
+    firstLoginDate = new Date();
+    localStorage.setItem("firstLoginDate", firstLoginDate); 
+} else {
+    firstLoginDate = new Date(localStorage.getItem("firstLoginDate"));
+}
+
+checkWeeklyDiamonds(); 
+startWeeklyCountdown();
+
+
+
+    function updateCoinDisplay() {
+        document.querySelector("#coins").innerHTML = `🪙: ${playerCoins}`;
+        localStorage.setItem("playerCoins", playerCoins);
+    }
+
+    function updateDiamondDisplay() {
+        document.querySelector("#diamond").innerHTML = `💎: ${playerDiamonds}`;
+        localStorage.setItem("playerDiamonds", playerDiamonds);
+    }
+    
+    document.getElementById("copy-btn").addEventListener("click", function () {
+        let coinsMessage = `Bro... I Have ${playerCoins} Coins And ${playerDiamonds} Diamonds ! Join Me And Let's Play!`;
+        navigator.clipboard.writeText(coinsMessage).then(() => {
+            alert('Coins And Diamond Info Copied To Clipboard! Share It With Your Friends.');
+        }).catch((error) => {
+            alert('Failed To Copy: ' + error);
+        });
+    });
+
+    document.getElementById("screenshot").addEventListener("click", function () {
+        const gameArea = document.body; 
+        html2canvas(gameArea).then((canvas) => {
+            const link = document.createElement("a");
+            link.download = "game-screenshot.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+    });
+
+    function updateHistory(opponent, result, coinChange, diamondChange) {
+        const newHistory = {
+            opponent: opponent,
+            result: result,
+            coins: coinChange,
+            diamonds: diamondChange,
+            time: new Date().toLocaleString(),
+        };
+        gameHistory.push(newHistory);
+        localStorage.setItem("gameHistory", JSON.stringify(gameHistory));
+    }
+
+    document.querySelector("#multiplayer-btn").addEventListener("click", () => {
+        isMultiplayer = true;
+        resetGame();
+    });
+    document.querySelector("#ai-btn").addEventListener("click", () => {
+        isMultiplayer = false;
+        resetGame();
+    });
+
+    document.querySelector("#view-history").addEventListener("click", () => {
+        window.location.href = "history.html";
+    });
+
+    document.querySelector("#play-again").addEventListener("click", () => {
+        resetGame();
+        document.querySelector("#play-again").style.display = "none";
+    });
+
+    boxes.forEach((e, index) => {
+        e.dataset.index = index;
+        e.addEventListener("click", () => {
+            if (!isGameOver && e.innerHTML === "") {
+                e.innerHTML = turn;
+                board[index] = turn;
+                if (checkWin(board)) {
+                    handleWin();
+                } else if (checkDraw(board)) {
+                    handleDraw();
+                } else {
+                    changeTurn();
+                    if (!isMultiplayer && turn === "O") {
+                        setTimeout(aiMove, 500);
+                    }
+                }
+            }
+        });
+    });
+
+    function handleWin() {
+        let coinChange = 0;
+        let diamondChange = 0;
+        let resultMessage = `${turn} wins!`;
+
+        if (isMultiplayer) {
+            if (turn === "X") {
+                coinChange = 20;
+                playerCoins += coinChange;
+                diamondChange = 5;
+                playerDiamonds += diamondChange;
+                alert("Congratulations! You Earned 20 Coins And 5 Diamond.");
+                updateHistory("Multiplayer", "Win", coinChange, diamondChange);
+            } else {
+                coinChange = 0;
+                diamondChange = 0;
+                updateHistory("Multiplayer", "Loss", coinChange, diamondChange);
+            }
+        } else {
+            if (turn === "X") {
+                coinChange = 50;
+                playerCoins += coinChange;
+                diamondChange = 30;
+                playerDiamonds += diamondChange;
+                alert("Congratulations! You Earned 50 Coins And 30 Diamond.");
+                updateHistory("AI", "Win", coinChange, diamondChange);
+            } else {
+                coinChange = -50;
+                playerCoins += coinChange;
+                diamondChange = -10;
+                playerDiamonds += diamondChange;
+                alert("You Lost! 50 coins And 10 Diamond Have Been Deducted.");
+                updateHistory("AI", "Loss", coinChange, diamondChange);
+            }
+        }
+
+        updateCoinDisplay();
+        updateDiamondDisplay();
+        endGame(resultMessage);
+        document.querySelector("#play-again").style.display = "inline";
+    }
+
+    function handleDraw() {
+        let coinChange = 0;
+        let diamondChange = 0;
+        let resultMessage = "It's A Draw!";
+
+        if (isMultiplayer) {
+            updateHistory("Multiplayer", "Draw", coinChange, diamondChange);
+        } else {
+            updateHistory("AI", "Draw", coinChange, diamondChange);
+        }
+
+        updateCoinDisplay();
+        updateDiamondDisplay();
+        endGame(resultMessage);
+        document.querySelector("#play-again").style.display = "inline";
+    }
+
+    function changeTurn() {
+        turn = turn === "X" ? "O" : "X";
+    }
+
+    function checkWin(board) {
+        const winConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6],
+        ];
+
+        for (let condition of winConditions) {
+            const [a, b, c] = condition;
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function checkDraw(board) {
+        return board.every(cell => cell !== null);
+    }
+
+    function endGame(message) {
+        isGameOver = true;
+        alert(message);
+    }
+
+    function resetGame() {
+        isGameOver = false;
+        board = Array(9).fill(null);
+        boxes.forEach((e) => {
+            e.innerHTML = "";
+        });
+        turn = "X";
+        document.querySelector("#play-again").style.display = "inline";
+    }
+
+    
+function aiMove() {
+    let bestMove = getBestMove(board);
+    board[bestMove] = "O";
+    boxes[bestMove].innerHTML = "O";
+    if (checkWin(board)) {
+        handleWin();
+    } else if (checkDraw(board)) {
+        handleDraw();
+    } else {
+        changeTurn();
+    }
+}
+
+function getBestMove(board) {
+    let bestVal = -Infinity;
+    let bestMove = -1;
+
+    for (let i = 0; i < 9; i++) {
+        if (board[i] === null) {
+            board[i] = "O";
+            let moveVal = minimax(board, 0, -Infinity, Infinity, false);
+            board[i] = null;
+
+            if (moveVal > bestVal) {
+                bestMove = i;
+                bestVal = moveVal;
+            }
+        }
+    }
+    return bestMove;
+}
+
+function minimax(board, depth, alpha, beta, isMax) {
+    let score = evaluate(board);
+
+    if (score === 10) return score - depth; // Reward faster wins
+    if (score === -10) return score + depth; // Punish slower losses
+    if (checkDraw(board)) return 0;
+
+    if (isMax) {
+        let best = -Infinity;
+
+        for (let i = 0; i < 9; i++) {
+            if (board[i] === null) {
+                board[i] = "O";
+                best = Math.max(best, minimax(board, depth + 1, alpha, beta, false));
+                board[i] = null;
+                alpha = Math.max(alpha, best);
+
+                if (beta <= alpha) break; 
+            }
+        }
+        return best;
+    } else {
+        let best = Infinity;
+
+        for (let i = 0; i < 9; i++) {
+            if (board[i] === null) {
+                board[i] = "X";
+                best = Math.min(best, minimax(board, depth + 1, alpha, beta, true));
+                board[i] = null;
+                beta = Math.min(beta, best);
+
+                if (beta <= alpha) break; // Alpha-Beta Pruning
+            }
+        }
+        return best;
+    }
+}
+
+function evaluate(board) {
+    for (let i = 0; i < 3; i++) {
+        if (board[i * 3] && board[i * 3] === board[i * 3 + 1] && board[i * 3 + 1] === board[i * 3 + 2]) {
+            return board[i * 3] === "O" ? 10 : -10;
+        }
+        if (board[i] && board[i] === board[i + 3] && board[i + 3] === board[i + 6]) {
+            return board[i] === "O" ? 10 : -10;
+        }
+    }
+
+    if (board[0] && board[0] === board[4] && board[4] === board[8]) {
+        return board[0] === "O" ? 10 : -10;
+    }
+
+    if (board[2] && board[2] === board[4] && board[4] === board[6]) {
+        return board[2] === "O" ? 10 : -10;
+    }
+
+    return 0;
+}
+
+checkWeeklyDiamonds();
+startWeeklyCountdown();
+updateCoinDisplay();
+updateDiamondDisplay();
+
+
+});
+</script>
+
+    </body>
+</html>
